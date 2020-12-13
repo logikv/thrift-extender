@@ -15,14 +15,11 @@ func main() {
 	var firstThriftFile string
 	var secondThriftFile string
 
-	firstThriftFile = "hive_metastore_2_3.thrift"
-	secondThriftFile = "hive_metastore_3.thrift"
 	flag.Parse()
 
 	if flag.NArg() < 2 {
-		log.Fatalf("Usage of %s: [options] firstThriftFile secondThriftFile combinedThriftFile\n", os.Args[0])
 		flag.PrintDefaults()
-		os.Exit(1)
+		log.Fatalf("Usage of %s: [options] firstThriftFile secondThriftFile combinedThriftFile\n", os.Args[0])
 	}
 
 	firstThriftFile = flag.Arg(0)
