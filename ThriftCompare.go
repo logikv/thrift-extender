@@ -78,7 +78,7 @@ func main() {
 	flag.Parse()
 
 	if flag.NArg() < 2 {
-		fmt.Fprintf(os.Stderr, "Usage of %s: [options] firstThriftFile secondThriftFile combinedThriftFile\n", os.Args[0])
+		log.Fatalf("Usage of %s: [options] firstThriftFile secondThriftFile combinedThriftFile\n", os.Args[0])
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
@@ -91,12 +91,12 @@ func main() {
 
 	a, err := parser.ParseFile(firstThriftFile)
 	if err != nil {
-		fmt.Errorf("Some error while parsing file [%s] \n", err)
+		log.Fatalf("Some error while parsing file [%s] \n", err)
 	}
 
 	b, err := parser.ParseFile(secondThriftFile)
 	if err != nil {
-		fmt.Errorf("Some error while parsing file [%s] \n", err)
+		log.Fatalf("Some error while parsing file [%s] \n", err)
 	}
 
 	thriftDoc1 := a.(*parser.Thrift)
@@ -107,8 +107,8 @@ func main() {
 	structs1 := thriftDoc1.Structs
 	structs2 := thriftDoc2.Structs
 	for _, structElement := range structs1 {
-		existedStruct2 := structs2[structElement.Name]
-		if existedStruct2 == nil {
+		existedStruct := structs2[structElement.Name]
+		if existedStruct == nil {
 			log.Printf("struct [%s] doesnt exists in file [%s]\n", structElement.Name, secondThriftFile)
 			addStruct(structElement)
 			continue
@@ -117,20 +117,20 @@ func main() {
 
 	unions1 := thriftDoc1.Unions
 	unions2 := thriftDoc2.Unions
-	for _, union := range unions1 {
-		existedUnion2 := unions2[union.Name]
-		if existedUnion2 == nil {
-			log.Printf("union [%s] doesnt exists in file [%s]\n", union.Name, secondThriftFile)
-			addUnion(union)
+	for _, unionElement := range unions1 {
+		existedUnion := unions2[unionElement.Name]
+		if existedUnion == nil {
+			log.Printf("unionElement [%s] doesnt exists in file [%s]\n", unionElement.Name, secondThriftFile)
+			addUnion(unionElement)
 			continue
 		}
 	}
 	types1 := thriftDoc1.Typedefs
 	types2 := thriftDoc2.Typedefs
 	for _, typeElement := range types1 {
-		typedef := types2[typeElement.Name]
-		if typedef == nil {
-			log.Printf("typedef [%s] doesnt exists in file [%s]\n", typeElement.Name, secondThriftFile)
+		existedTypedef := types2[typeElement.Name]
+		if existedTypedef == nil {
+			log.Printf("existedTypedef [%s] doesnt exists in file [%s]\n", typeElement.Name, secondThriftFile)
 			addTypedef(typeElement)
 			continue
 		}
@@ -139,9 +139,9 @@ func main() {
 	enums1 := thriftDoc1.Enums
 	enums2 := thriftDoc2.Enums
 	for _, enumElement := range enums1 {
-		enum := enums2[enumElement.Name]
-		if enum == nil {
-			log.Printf("enum [%s] doesnt exists in file [%s]\n", enumElement.Name, secondThriftFile)
+		existedEnum := enums2[enumElement.Name]
+		if existedEnum == nil {
+			log.Printf("existedEnum [%s] doesnt exists in file [%s]\n", enumElement.Name, secondThriftFile)
 			addEnum(enumElement)
 			continue
 		}
@@ -150,8 +150,8 @@ func main() {
 	exceptions1 := thriftDoc1.Exceptions
 	exceptions2 := thriftDoc2.Exceptions
 	for _, exceptionElement := range exceptions1 {
-		existedException2 := exceptions2[exceptionElement.Name]
-		if existedException2 == nil {
+		existedException := exceptions2[exceptionElement.Name]
+		if existedException == nil {
 			log.Printf("exception [%s] doesnt exists in file [%s]\n", exceptionElement.Name, secondThriftFile)
 			addException(exceptionElement)
 			continue
@@ -161,18 +161,18 @@ func main() {
 	services1 := thriftDoc1.Services
 	services2 := thriftDoc2.Services
 	for _, serviceElement := range services1 {
-		existedService2 := services2[serviceElement.Name]
-		if existedService2 == nil {
+		existedService := services2[serviceElement.Name]
+		if existedService == nil {
 			log.Printf("service [%s] doesnt exists in file [%s]\n", serviceElement.Name, secondThriftFile)
 			addService(serviceElement)
 			continue
 		}
 		methods := serviceElement.Methods
-		for _, method := range methods {
-			existedMethod := existedService2.Methods[method.Name]
+		for _, methodElement := range methods {
+			existedMethod := existedService.Methods[methodElement.Name]
 			if existedMethod == nil {
-				log.Printf("method [%s]->[%s] doesnt exists in file [%s]\n", serviceElement.Name, method.Name, secondThriftFile)
-				addMethod(serviceElement, method)
+				log.Printf("methodElement [%s]->[%s] doesnt exists in file [%s]\n", serviceElement.Name, methodElement.Name, secondThriftFile)
+				addMethod(serviceElement, methodElement)
 				continue
 			}
 		}
@@ -181,8 +181,8 @@ func main() {
 	constants1 := thriftDoc1.Constants
 	constants2 := thriftDoc2.Constants
 	for _, constantElement := range constants1 {
-		existedConstant2 := constants2[constantElement.Name]
-		if existedConstant2 == nil {
+		existedConstant := constants2[constantElement.Name]
+		if existedConstant == nil {
 			log.Printf("constant [%s] doesnt exists in file [%s]\n", constantElement.Name, secondThriftFile)
 			addConstant(constantElement)
 			continue
@@ -192,9 +192,9 @@ func main() {
 	includes1 := thriftDoc1.Includes
 	includes2 := thriftDoc2.Includes
 	for i, includeElement := range includes1 {
-		includeExisted := includes2[i]
-		if len(includeExisted) == 0 {
-			log.Printf("includeExisted [%s] doesnt exists in file [%s]\n", includeElement, secondThriftFile)
+		existedInclude := includes2[i]
+		if len(existedInclude) == 0 {
+			log.Printf("existedInclude [%s] doesnt exists in file [%s]\n", includeElement, secondThriftFile)
 			addInclude(i, includeElement)
 			continue
 		}
