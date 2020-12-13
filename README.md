@@ -1,4 +1,4 @@
-# thrift-comparator | thrift-combinator
+# thrift-extender
 Can compare two Thrift IDL's to show difference with structs, services, constants and etc
 and generate combined version of they both
 ;
@@ -52,7 +52,7 @@ https://github.com/apache/hive/blob/branch-2.3/metastore/if/hive_metastore.thrif
 I need it for compatibility reason in my case;
 
 
-Special Thx to github.com/samuel/go-thrift that script based
+Special Thx to https://github.com/samuel/go-thrift that script based
 
 
 P.S. Sorry for my English. I'm not native speaker.
