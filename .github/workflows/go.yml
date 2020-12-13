@@ -34,3 +34,8 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: thrift-extender
+        path: thrift-extender

@@ -76,7 +76,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 			log.Printf("exception [%s] doesnt exists in file [%s]\n", exceptionElement.Name, secondThriftFile)
 			extendedThriftDocument.Exceptions[exceptionElement.Name] = exceptionElement
 			log.Printf("Add missing exception %s", exceptionElement.Name)
-			continue
 		}
 	}
 
@@ -88,7 +87,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 			log.Printf("service [%s] doesnt exists in file [%s]\n", serviceElement.Name, secondThriftFile)
 			extendedThriftDocument.Services[serviceElement.Name] = serviceElement
 			log.Printf("Add missing service %s", serviceElement.Name)
-			continue
 		}
 		methods := serviceElement.Methods
 		for _, methodElement := range methods {
@@ -97,7 +95,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 				log.Printf("methodElement [%s]->[%s] doesnt exists in file [%s]\n", serviceElement.Name, methodElement.Name, secondThriftFile)
 				extendedThriftDocument.Services[serviceElement.Name].Methods[methodElement.Name] = methodElement
 				log.Printf("Add missing method %s -> %s", serviceElement.Name, methodElement.Name)
-				continue
 			}
 		}
 	}
@@ -110,7 +107,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 			log.Printf("constant [%s] doesnt exists in file [%s]\n", constantElement.Name, secondThriftFile)
 			extendedThriftDocument.Constants[constantElement.Name] = constantElement
 			log.Printf("Add missing constant %s", constantElement.Name)
-			continue
 		}
 	}
 
@@ -122,7 +118,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 			log.Printf("existedInclude [%s] doesnt exists in file [%s]\n", includeElement, secondThriftFile)
 			extendedThriftDocument.Includes[i] = includeElement
 			log.Printf("Add missing Includes %s", includeElement)
-			continue
 		}
 	}
 
@@ -134,7 +129,6 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 			log.Printf("namespace [%s]->[%s] doesnt exists in file [%s]\n", lang, existedNamespace, secondThriftFile)
 			extendedThriftDocument.Namespaces[lang] = namespace
 			log.Printf("Add missing namespace %s", namespace)
-			continue
 		}
 	}
 
