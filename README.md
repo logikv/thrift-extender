@@ -55,4 +55,8 @@ I need it for compatibility reason in my case;
 Special Thx to https://github.com/samuel/go-thrift that script based
 
 
+Known issues:
+ -[ ] error while parsing if constant have comma at the end of line
+ -[ ] . 
+
 P.S. Sorry for my English. I'm not native speaker.
