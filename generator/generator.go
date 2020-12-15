@@ -118,7 +118,7 @@ func formatConstantValue(constant *parser.Constant) string {
 	if constant.Type.String() == "byte" {
 		valueStr = fmt.Sprintf("%d", constant.Value)
 	} else {
-		valueStr = fmt.Sprintf("%s", constant.Value)
+		valueStr = fmt.Sprintf("\"%s\"", constant.Value)
 	}
 	return valueStr
 }
