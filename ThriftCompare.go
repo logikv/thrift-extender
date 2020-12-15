@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/samuel/go-thrift/parser"
 	"log"
 	"os"
 	generator2 "thrift-extender/generator"
@@ -10,7 +9,6 @@ import (
 )
 
 func main() {
-	var extendedThriftDocument parser.Thrift
 	var combinedThriftFile string
 	var firstThriftFile string
 	var secondThriftFile string
@@ -28,10 +26,10 @@ func main() {
 		combinedThriftFile = flag.Arg(2)
 	}
 
+	extendedThriftDocument := parser2.ParseFiles(firstThriftFile, secondThriftFile)
+
 	if flag.Arg(2) != "" {
 		generator2.GenerateThriftIDLFile(combinedThriftFile, extendedThriftDocument)
 	}
-
-	parser2.ParseFiles(firstThriftFile, secondThriftFile, extendedThriftDocument)
 
 }

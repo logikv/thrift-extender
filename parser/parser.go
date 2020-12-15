@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftDocument parser.Thrift) {
+func ParseFiles(firstThriftFile string, secondThriftFile string) (extendedThriftDocument *parser.Thrift) {
 	a, err := parser.ParseFile(firstThriftFile)
 	if err != nil {
 		log.Fatalf("Some error while parsing file [%s] \n", err)
@@ -19,7 +19,7 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 	thriftDoc1 := a.(*parser.Thrift)
 	thriftDoc2 := b.(*parser.Thrift)
 
-	extendedThriftDocument = *thriftDoc2
+	extendedThriftDocument = thriftDoc2
 
 	structs1 := thriftDoc1.Structs
 	structs2 := thriftDoc2.Structs
@@ -132,4 +132,5 @@ func ParseFiles(firstThriftFile string, secondThriftFile string, extendedThriftD
 		}
 	}
 
+	return extendedThriftDocument
 }

@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func GenerateThriftIDLFile(filename string, thrift parser.Thrift) {
+func GenerateThriftIDLFile(filename string, thrift *parser.Thrift) {
 	file, err := os.Create(filename)
 	if err != nil {
 		log.Fatal(err)
