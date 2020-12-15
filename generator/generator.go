@@ -24,7 +24,7 @@ func GenerateThriftIDLFile(filename string, thrift *parser.Thrift) {
 	}
 	writer.WriteString("\n")
 	for _, constant := range thrift.Constants {
-		fieldStr := fmt.Sprintf("const %s %s = %d \n", formatType(*constant.Type), constant.Name, constant.Value)
+		fieldStr := fmt.Sprintf("const %s %s = %s \n", formatType(*constant.Type), constant.Name, formatConstantValue(constant))
 		writer.WriteString(fieldStr)
 	}
 	writer.WriteString("\n")
@@ -111,6 +111,16 @@ func GenerateThriftIDLFile(filename string, thrift *parser.Thrift) {
 	writer.WriteString("\n")
 
 	writer.Flush()
+}
+
+func formatConstantValue(constant *parser.Constant) string {
+	var valueStr string
+	if constant.Type.String() == "byte" {
+		valueStr = fmt.Sprintf("%d", constant.Value)
+	} else {
+		valueStr = fmt.Sprintf("%s", constant.Value)
+	}
+	return valueStr
 }
 
 func formatReturnType(method *parser.Method) string {
